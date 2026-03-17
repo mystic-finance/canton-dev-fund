@@ -12,7 +12,7 @@ Mystic is building a modular lending market on Canton, which enables curators to
 
 This work expands on what we’ve been doing over the past 12 months, where we’ve been managing the Morpho deployment on Plume, an RWA-focused L2 where we’ve achieved $80M TVL and 33k+ active users. It is our thesis that isolated lending and the ability to onboard better and more diversified collateral, RWAs in particular, is the future of on-chain lending. That thesis has led us right to Canton, where we now plan to build it in the Daml language with native Canton privacy and functionality baked in.
 
-Serves this proposal to request the Committee for assistance mainly with audit costs so we may take Mystic to market on Canton. We’re confident in our ability to operate and manage this business, as we have done so over the past year and have the relationships and expertise necessary to see it thrive.
+Serves this proposal to request the Committee for assistance mainly with audit costs, so we may take Mystic to market on Canton. We’re confident in our ability to operate and manage this business, as we have done so over the past year and have the relationships and expertise necessary to see it thrive.
 
 ---
 
@@ -133,8 +133,6 @@ We will bootstrap supply-side TVL with CC rewards and a CEX integration we have 
 **Total Funding Request:**  
 
 **Total funding request:** 1,266,665 CC (190K USD at 0.15 CC/USD rate)
-
-The funds will mostly be spent on audits so we can take Mystic to market. Additional funding on the last milestone only rewards traction and a material contribution to the ecosystem.
 
 **Payment breakdown by Milestone:**
 
