@@ -5,12 +5,11 @@
 **Created:** 2026-03-17
 **Champion:** Gabi Tuinaite, Bitsafe
 **Label:** defi-protocols
-**RFPs:** RFP 13 "Payments & DeFi" and RFP 12 "RWA Standards"
+**RFPs:** RFP 13 "Payments & DeFi"
 
 ## Why the ecosystem needs it
 
-- On the vault standard: many projects are currently building vaults-based products on Canton. Without a unified standard, we risk them not being interoperable and compatible with each other and trading venues on Canton, which will heavily affect adoption and ecosystem collaboration. We will drive adoption by getting inputs from everyone building vaults on Canton, doing our best to make it backwards-compatible and help everyone moving forward to adhere to the standard by open-sourcing a reference implementation and its respective documentation.
-- On the lending market: onboarding new issuers on Canton is heavily dependant on the utility we can give those assets, of which lending is usually a key driver. Within lending, curated lending has proven to be the most scalable model, as it can onboard a much larger amount of collateral assets than the shared model via isolating risk. We will drive adoption by sharing rewards with curators and lenders, bring over dominant Morpho and Kamino curators that want Canton exposure and that can port over TVL, and work closely with ecosystem players to drive adoption across Earn and borrow respectively.
+Onboarding new issuers on Canton is heavily dependant on the utility we can give those assets, of which lending is usually a key driver. Within lending, curated lending has proven to be the most scalable model, as it can onboard a much larger amount of collateral assets than the shared model via isolating risk. We will drive adoption by sharing rewards with curators and lenders, bring over dominant Morpho and Kamino curators that want Canton exposure and that can port over TVL, and work closely with ecosystem players to drive adoption across Earn and borrow respectively.
 
 ---
 
@@ -19,8 +18,6 @@
 Mystic is building a modular lending market on Canton, which enables curators to create isolated lending vaults which allocate capital according to different risk preferences. This means isolated risk exposure for LPs and increased capital efficiency for borrowers, all under the privacy-preserving stack of Canton.
 
 This work expands on what we’ve been doing over the past 12 months, where we’ve been managing the Morpho deployment on Plume, an RWA-focused L2 where we’ve achieved $80M TVL and 33k+ active users. It is our thesis that isolated lending and the ability to onboard better and more diversified collateral, RWAs in particular, is the future of on-chain lending. That thesis has led us right to Canton, where we now plan to build it in the Daml language with native Canton privacy and functionality baked in.
-
-We also propose introducing a CIP with a unified tokenized vault standard, equivalent to the ERC-4626 vault standard on the EVM. This will dramatically improve Canton interoperability and be very beneficial for Canton DeFi. See more details in the ammendment made in the comments of this PR.
 
 Serves this proposal to request the Committee for assistance mainly with audit costs, so we may take Mystic to market on Canton. We’re confident in our ability to operate and manage this business, as we have done so over the past year and have the relationships and expertise necessary to see it thrive.
 
@@ -35,15 +32,11 @@ Within this grant, Mystic delivers a production-ready modular and curated lendin
 * Lending, borrowing and leveraging crypto and RWAs alike in an isolated environment, permissioned or permissionless;
 * Reusable and open infrastructure for anyone to create their own lending markets on Canton, for internal or external purposes;
 
-See also the ammendment made to this proposal in the comments of this PR, where we propose to introduce a unified vault standard to avoid interoperability problems on Canton in the future.
-
 ### 2. Implementation Mechanics
 
 The app is constituted by a set of lending markets and a set of curated vaults connected to the markets, as well as a frontend for user interactions and a backend for data management. Here we will outline how each of these work.
 
 Each Mystic Market is a contract which accepts two assets, the collateral asset and the borrow asset (designed to align with the Canton Token Standard introduced in CIP-56). Each market has a) an oracle price feed, b) an interest rate model (IRM), c) an LLTV (liquidation loan-to-value) and d) a Custodian Party (can be a Party or a DecParty). For price verification, we integrate official Chainlink Data Streams through the ChainlinkPriceOracle template, whereas the LLTV is a parameter set by the curator upon market creation and the IRM is its own standalone contract. The Custodian Party is the one who holds the market's assets and is set by the market’s creator. As for the loan process itself, we first confirm that the assets deposited are correct by checking that the holding's instrument and registrar fields match what the market is configured to accept. Furthermore, any action on the protocol requires signatures from both the user and the protocol provider as co-signatories. The actions considered are supplying collateral, supplying the loan asset, repaying debt, withdrawing supplies, borrowing and liquidating. The protocol uses a keyless template design optimized for Daml 3.x and Daml-LF 2.2, removing traditional contract keys and maintainers to avoid per-key maintainer-uniqueness confirmation overhead and reduce per-transaction latency on the Canton Domain.
-
-As part of this proposal, we are also delivering a CIP proposal and an open-source vault standard reference implementation. See the amendment to this proposal in the comments for more details on the implementation mechanics planned for this OSS implementation.
 
 Each Mystic Vault is a contract which receives user deposits, allocates them to markets and does share accounting. Each vault also has its own Vault Registrar (can be a Party or a DecParty), who mints vaults shares to the depositor and holds idle assets until they’re lent to a market. As for the deposit and allocation logic itself - when a user supplies to the vault, they receive vault shares (tokens which represent their stake in the vault). Their assets are then lent out to market via an Adapter connecting each vault to its markets. Each vault is connected to the AdapterRegistry, which lets vaults support other types of markets to be added later on (e.g. fixed-rate). When a user supplies to the vault, funds are kept idle until the Adapter sends assets to the markets by calling Market.Supply with the Vault Registrar Party as the depositor, creating a LendingPosition owned by the Registrar Party. The Adapter stores the position reference so it can later withdraw funds when users redeem shares or when liquidity needs to be rebalanced. This design allows vault allocations to be executed automatically by the Allocator while custody of assets remains secured by Vault Registrar.
 
@@ -58,8 +51,8 @@ This work directly aligns with Canton’s architecture of having multiple Subnet
 The proposal also aligns with ecosystem priorities to further interoperability and broaden participation, as Mystic advances Canton DeFi modularity and increases DeFi addressable market dramatically by enabling many more issuers to be onboarded as lending collateral and supply assets, as well as enabling anyone to build private and isolated lending experiences on top of Mystic. The proposed introduction of a unified vault standard as a new CIP is also fully in alignment with these objectives.
 
 More specifically, in terms of alignment with existing ecosystem initiatives and CIPs:
-- The open-source ERC-4626-like vault standard we've proposed building is in direct alignment and will be integrated with the [Decentralization Manager](https://github.com/canton-foundation/canton-dev-fund/pull/298) proposed by Bitsafe in PR 298 to the Dev Fund, as vaults will be able to choose having centralized custody or use the Decentralization Manager for decentralized custody.
-- We're building everything based on CIP-56 for asset standards at both vault and market level and the oracle template at the market level.
+- The lending vaults we've proposed building are in direct alignment and will be integrated with the [Decentralization Manager](https://github.com/canton-foundation/canton-dev-fund/pull/298) proposed by Bitsafe in PR 298 to the Dev Fund, as vaults will be able to choose having centralized custody or use the Decentralization Manager for decentralized custody.
+- We're building everything based on CIP-56 and CIP-112 for asset standards at both vault and market level and the oracle template at the market level.
 
 ### 4. Backward Compatibility
 
@@ -101,9 +94,7 @@ Some further comments:
 ## **Milestone 2: Vaults**
 
 **Focus:**
-* Develop an open-source vault standard on Canton functional, equivalent to the ERC-4626 standard on the EVM. Propose a CIP for this new standard for all to adhere to.
-* Make a reference implementation on Devnet open-source available for all to see and use along with documentation for it. This will live on as an open-source artifact for the Canton community.
-* Customize the vault for our own use case of curated lending - this includes yield calculations, vault roles, fees, allocation, adding/removing markets, vault reallocation.
+*Develop a lending vault on Canton, custom-made for our own use case of curated lending - this includes yield calculations, vault roles, fees, allocation, adding/removing markets, vault reallocation.
 * Factory contract for vault creation.
 * Vault and market permissioning - enabling whitelisting borrowers, lenders and liquidators per market and vault.
 * Curator UI development, where curators can create and manage their vaults.
@@ -113,12 +104,10 @@ Some further comments:
 Estimated delivery:
 Three months from Milestone 1, including audit reviews.
 
-We propose doing the same as above: funds are disbursed after acceptance criteria for this milestone has been confirmed, so we can then audit and go to market with vaults. The reference implementation will be published publicly after it is audited also.
+We propose doing the same as above: funds are disbursed after acceptance criteria for this milestone has been confirmed, so we can then audit the vaults' code.
 
 **Deliverables:**
 
-* Submit CIP proposal for a common tokenized vault standard that the whole ecosystem can adhere to, following the example set by the ERC-4626 vault on the EVM. More detail in the amendment made to this proposal as a comment.
-* Reference implementation of a vault as per the CIP delivered and made available as open-source software, for all to use and build on top of.
 * Mystic vault Daml smart contracts.
 * Mystic curator UI, fully integrated with vault smart contracts
 * Vault functionality - deposit, withdraw, allocate, fee distribution, yield distribution, role enforcement, permissioning enforcement, share accounting.
@@ -155,8 +144,6 @@ Deposits are here counted as the sum of collateral + supply asset deposits.
 **Milestone 2:** Vaults
 
 * Completion of audits on the market smart contracts with audit reports and remediation;
-* Submission of a new tokenized vault CIP standard;
-* An open source reference implementation of the vault smart contract for the whole Canton ecosystem to use. Documentation for its use to be submitted alongside it;
 * Demonstration of Mystic’s vault implementation of curated lending vaults fully working on Devnet, where users can supply/withdraw an asset and where assets deposited are split amongst the chosen markets and earn a blended supply APY;
 * Demonstration of vaults being able to add/remove markets, allocate to markets and rebalance across added markets as triggered by the curator;
 * Demonstration of owners of vaults being able to set fees, fee recipients, add/remove roles and manage access control via the curator UI. Public allocation, adapter registry and vault adapters also working as intended;
@@ -209,14 +196,6 @@ This way, Mystic is flexible on CC volatility and we can execute the project wit
 
 ---
 
-## Maintenance & Ownership
-
-There are two things to consider here: the Mystic codebase and the OSS artifact that is the vault standard. The vault standard will be published by Mystic Labs, the company building and operating Mystic, under the MIT license to be freely used by anyone as a public good, whereas Mystic-specific code will remain private and proprietary to Mystic Labs. More specifically, that means the lending market layer done in Milestone 1 remains private, whereas in Milestone 2 there will be a part of the code that remains private, which is the vault code specific to our use case, and the OSS vault standard which is made public and open-source for anyone to use.
-
-Mystic Labs, the company behind Mystic, hereby commits to maintain the vault standard and continue its development and compatibility updates for a period of minimum 12 months after the completion of milestone 2, should the grant be approved. This will be funded by protocol operations; we will not ask for additional grants to maintain the code. We will otherwise work with the ecosystem to support any changes necessary, fix bugs that arise, update dependencies and solve CIP-compatibility issues to ensure the vault standard remains broadly usable by everyone in the community.
-
----
-
 ## Co-Marketing
 
 Upon each milestone release, Mystic will collaborate with the Canton Foundation on:
@@ -233,8 +212,6 @@ Canton’s vision for interoperability of private, autonomous applications is a 
 * Subnets to have their own isolated, private lending market on the Global Synchronizer. We believe this can be a crucial stepping stone to make Canton’s vision a reality.
 * Attracting new curators, LPs, builders and participants by bringing composability to new assets.
 * Onboarding a plethora of asset issuers from other ecosystems and TradFi alike to the Global Synchronizer, which would be invaluable for Canton DeFi.
-
-See also the Motivation for the submission of a CIP for a unified tokenized vault standard in the ammendment made in the comments of this PR.
 
 ---
 
@@ -253,5 +230,3 @@ As for why this is the right design - there are two main models which dominate D
 We believe the ability to give the best rates on the best collateral will win in lending. That is only possible by isolating it. In addition, isolating risk is key in providing an institutional-grade experience, as that is what most sophisticated players prefer. And to top it all off, the flexibility in onboarding more collateral is better primed for RWAs, which have different permissioning requirements. Taking all of these into account, it seems clear to us that curated lending is the right model for Canton - better adjusted to an institutional-user base, better adjusted to the assets the chain wants to service, and even better adjusted to how the Canton ecosystem is structured (i.e. it fits the Subnets model very well, as each Subnet can have its own curated vault(s)). We’re thus very confident in this design decision and that it is right for Canton.
 
 All in all, Mystic is uniquely positioned to deliver a curated lending market of Canton, which is actually something we’ve wanted to do for a while now - we reached out to the Digital Asset team back in 2024 to build this, but had to pay a starting fee at the time to do so which ultimately led to us not moving forward with the project. The circumstances having now changed, we would love to make our original vision a reality with your help, and work together to bring Canton DeFi to the next level. Thank you for reading and for your consideration!
-
-See also the Rationale for the submission of a CIP for a unified tokenized vault standard in the ammendment made in the comments of this PR.
