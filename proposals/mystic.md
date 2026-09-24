@@ -5,6 +5,12 @@
 **Created:** 2026-03-17
 **Champion:** Gabi Tuinaite, Bitsafe
 **Label:** defi-protocols
+**RFPs:** RFP 13 "Payments & DeFi" and RFP 12 "RWA Standards"
+
+## Why the ecosystem needs it
+
+- On the vault standard: many projects are currently building vaults-based products on Canton. Without a unified standard, we risk them not being interoperable and compatible with each other and trading venues on Canton, which will heavily affect adoption and ecosystem collaboration. We will drive adoption by getting inputs from everyone building vaults on Canton, doing our best to make it backwards-compatible and help everyone moving forward to adhere to the standard by open-sourcing a reference implementation and its respective documentation.
+- On the lending market: onboarding new issuers on Canton is heavily dependant on the utility we can give those assets, of which lending is usually a key driver. Within lending, curated lending has proven to be the most scalable model, as it can onboard a much larger amount of collateral assets than the shared model via isolating risk. We will drive adoption by sharing rewards with curators and lenders, bring over dominant Morpho and Kamino curators that want Canton exposure and that can port over TVL, and work closely with ecosystem players to drive adoption across Earn and borrow respectively.
 
 ---
 
@@ -121,15 +127,16 @@ We propose doing the same as above: funds are disbursed after acceptance criteri
 
 ## **Milestone 3: Mainnet Launch and Ecosystem Adoption**
 
-**Focus:** Onboard 1 curator minimum, launch 1 vault minimum and reach $30M in deposits
+**Focus:** Drive traction on Mystic Markets and vaults, as well as onboard 2-3 curators for different assets. Milestone disbursement happens progressively as we gain traction.
 
 * **Estimated delivery:** 3 months from completing Milestone 2
 
 **Deliverables:**
 
-* 1 curated vault live on Mainnet with at least one market;
-* Publish comprehensive documentation for other builders and ecosystem players to be able to build and curate on Mystic;
-* Achieve $30M deposits on Canton (collateral + supply assets).
+* First markets live on Mainnet featuring with key assets in the ecosystem - CBTC, USDCx and CC as examples. Reach $1M 30-day average deposits in markets;
+* Launch first curated vaults on Canton in collaboration with 2-3 different curators. Reach $2.5M 30-day average deposits in vaults;
+* Scale vault adoption by onboarding more assets and integrating with wallets and distribution partners. Reach $10M 30-day average deposits in vaults.
+Deposits are here counted as the sum of collateral + supply asset deposits.
 
 ---
 
@@ -160,11 +167,10 @@ We propose doing the same as above: funds are disbursed after acceptance criteri
 
 **Milestone 3:** Mainnet Launch and Ecosystem Adoption
 
-* Completion of audits on the vaults smart contracts with audit reports and remediation;
-* Launch at least one curated vault with at least one market; 
-* Documentation delivered
-* Reach $30M in deposits;
-
+* First markets live on Mainnet - reach $1M 30-day average deposits in markets;
+* Launch first curated vaults - reach $2.5M 30-day average deposits in vaults;
+* Scale vault adoption - reach $10M 30-day average deposits in vaults.
+Supporting evidence will be made available publicly of the deposits in both vaults and markets, so that the Foundation can verify this information independently at any moment. Otherwise, if you require it, a Foundation-designated party can be added as an observer on the vault and market contracts so you can verify for yourself.
 
 **Timeline**: 3 months from Milestone 2 completion.
 
@@ -182,11 +188,14 @@ We will bootstrap supply-side TVL with CC rewards and a CEX integration we have 
 
 **Payment breakdown by Milestone:**
 
-* **Milestone 1 — Markets:** 333,333 CC (50K USD at 0.15 CC/USD rate) upon committee acceptance of the criteria.
+* **Milestone 1 — Markets:** 316,666 CC (47.5K USD at 0.15 CC/USD rate) upon committee acceptance of the criteria.
     
-* **Milestone 2 — Vaults:** 666,666 CC (100K USD at 0.15 CC/USD rate) upon committee acceptance of the criteria.
+* **Milestone 2 — Vaults:** 316,666 CC (47.5K USD at 0.15 CC/USD rate) upon committee acceptance of the criteria.
     
-* **Milestone 3 — Mainnet Launch and Ecosystem Adoption:** 266,666 CC (40K USD at 0.15 CC/USD rate) upon final release and acceptance of the criteria.
+* **Milestone 3 — Mainnet Launch and Ecosystem Adoption:** 633,333 CC (95K USD at 0.15 CC/USD rate), disbursed over three tranches are traction builds:
+* Markets reach $1M 30-day average deposits - 211,111 CC (31.67K USD at 0.15 CC/USD rate)
+* Vaults reach $2.5M 30-day average deposits - 211,111 CC (31.67K USD at 0.15 CC/USD rate)
+* Vaults reach $10M 30-day average deposits - 211,111 CC (31.67K USD at 0.15 CC/USD rate)
 
 
 **Volatility handling**
